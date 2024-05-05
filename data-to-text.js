@@ -1,18 +1,30 @@
 const fs = require('fs');
 // import from data.js
-const data = require('./data');
 
-fs.readFile("data.js", "utf8", (error, data) => {
-    if (error) {
-      console.log(error);
-      return;
-    }
-  });
+const dataArray = require('./data');
+let UserJSONData;
 
-fs.writeFile("userData.txt", data, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("File written successfully!");
-    }
-  });
+
+const jsonData = JSON.stringify(dataArray);
+
+fs.writeFile("./userData.txt", jsonData, (err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log("File written successfully!");
+  }
+});
+
+// let returnData;
+
+const retrieveData =  (err, fileData) => {
+  if (err) {
+    console.error(err);
+  } else {
+    const  arrayOfObj = JSON.parse(fileData);  
+    UserJSONData = arrayOfObj;
+  }   
+}
+ const data1 = fs.readFile('userData.txt', 'utf8', retrieveData);
+
+
